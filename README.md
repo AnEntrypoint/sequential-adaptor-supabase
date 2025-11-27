@@ -1,25 +1,18 @@
-# Tasker Adaptor Supabase
+# Sequential Adaptor Supabase
 
-Supabase PostgreSQL storage backend for `tasker-sequential` via `tasker-adaptor`.
-
-## Features
-
-- **Supabase Backend**: PostgreSQL via Supabase
-- **Managed Database**: No local database setup required
-- **Scalable**: Production-ready performance
-- **Integrated**: Works with existing Supabase projects
+Supabase PostgreSQL storage backend for sequential-ecosystem.
 
 ## Installation
 
 ```bash
-npm install tasker-adaptor tasker-adaptor-supabase
+npm install sequential-adaptor sequential-adaptor-supabase
 ```
 
-## Quick Start
+## Usage
 
 ```javascript
-import { SupabaseAdapter } from 'tasker-adaptor-supabase';
-import { TaskExecutor } from 'tasker-adaptor';
+import { SupabaseAdapter } from 'sequential-adaptor-supabase';
+import { TaskExecutor } from 'sequential-adaptor';
 
 const adapter = new SupabaseAdapter(
   'https://your-project.supabase.co',
@@ -30,7 +23,18 @@ const adapter = new SupabaseAdapter(
 await adapter.init();
 
 const executor = new TaskExecutor(adapter);
-const result = await executor.execute(taskRun, taskCode);
+```
+
+## Via Registry
+
+```javascript
+import { createAdapter } from 'sequential-adaptor';
+
+const adapter = await createAdapter('supabase', {
+  url: process.env.SUPABASE_URL,
+  serviceKey: process.env.SUPABASE_SERVICE_KEY,
+  anonKey: process.env.SUPABASE_ANON_KEY
+});
 ```
 
 ## Environment Variables
@@ -43,38 +47,17 @@ SUPABASE_ANON_KEY=your-anon-key
 
 ## Database Schema
 
-The Supabase backend uses these tables (created automatically by Supabase migrations):
-
+Tables created by migrations:
 - `task_runs` - Task execution records
 - `stack_runs` - Service call records
 - `task_functions` - Published task code
-- `keystore` - Credentials and configuration
+- `keystore` - Credentials
 
-## Testing
+## Features
 
-```bash
-npm test
-```
-
-## Integration with tasker-adaptor
-
-This package extends `tasker-adaptor` with Supabase-specific storage:
-
-```javascript
-import { SupabaseAdapter } from 'tasker-adaptor-supabase';
-import { TaskExecutor, StackProcessor, ServiceClient } from 'tasker-adaptor';
-
-const adapter = new SupabaseAdapter(url, serviceKey, anonKey);
-await adapter.init();
-
-const executor = new TaskExecutor(adapter);
-const processor = new StackProcessor(adapter);
-```
-
-## Other Backends
-
-- **tasker-adaptor-sqlite** - Local SQLite backend for development
-- **tasker-adaptor** - Base interfaces and core logic
+- Managed PostgreSQL database
+- Scalable for production use
+- Real-time capabilities via Supabase
 
 ## License
 
