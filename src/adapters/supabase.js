@@ -193,5 +193,3 @@ export class SupabaseAdapter extends StorageAdapter {
     // Supabase client doesn't need explicit close
   }
 }
-
-export default SupabaseAdapter;
